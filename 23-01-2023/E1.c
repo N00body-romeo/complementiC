@@ -1,7 +1,3 @@
-/*********************************************************
-NON ESCE DA RIVEDERE!!!!
-********************************************************/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -30,8 +26,8 @@ Mat* massima_sottomatrice(Mat *m){
   	float mediaMax = -1.0;
   	Mat* maxMatrice = NULL;
   	
-  	for (int i=0; i<N; i++) {
-    	for (int j=0; j<N; j++) {
+  	for (int i=0; i<=N; i++) {
+    	for (int j=0; j<=N; j++) {
           Mat* sottomatrice = mat_alloc(N,N);
          	for (int x=0; x<N; x++) {
           		for (int y=0; y<N; y++) {
