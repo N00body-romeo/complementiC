@@ -9,16 +9,6 @@ int massimo(int a, int b) {
 	return a > b ? a : b;
 }
 
-/*
-           
-         10 
-       _/ \_   
-      /     \  
-     7       5 
-     |           
-    /            
-   6 
-*/
 int discendenteMin(TipoAlbero a, TipoInfoAlbero* temp, int* dist, int distTemp) {
 	if (estVuoto(a)) return *dist;
   	distTemp++;
