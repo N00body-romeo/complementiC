@@ -5,6 +5,16 @@
 
 #include "aux.h"
 
+TipoAlbero copiaAlbero(TipoAlbero a) {
+    if (estVuoto(a)) {
+        return albBinVuoto(); // Se l'albero è vuoto, restituisci un albero vuoto
+    } else {
+        // Crea un nuovo nodo con lo stesso valore e copia i sottoalberi
+        TipoAlbero nuovoNodo = creaAlbBin(radice(a), copiaAlbero(sinistro(a)), copiaAlbero(destro(a)));
+        return nuovoNodo;
+    }
+}
+
 TipoAlbero aux(TipoAlbero a, int k, int somma, TipoAlbero ris) {
   	//controlla se vuoto
   	if (estVuoto(a)) return albBinVuoto();
@@ -14,7 +24,7 @@ TipoAlbero aux(TipoAlbero a, int k, int somma, TipoAlbero ris) {
        _/ \_   
       /     \  
      7       8 
-     |       |   
+     |       | 
     /       / \  
    1       8   2 
    
@@ -42,6 +52,6 @@ TipoAlbero aux(TipoAlbero a, int k, int somma, TipoAlbero ris) {
 }
 
 TipoAlbero limita_albero(TipoAlbero a, int k) {
-	TipoAlbero ris = creaAlbBin(radice(a),sinistro(a),destro(a));
+	TipoAlbero ris = copiaAlbero(a);
   	return aux(a,k,0,ris);
 }
