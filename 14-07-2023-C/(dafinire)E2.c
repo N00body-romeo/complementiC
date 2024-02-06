@@ -40,3 +40,25 @@ TipoLista mediaMenoMax(TipoLista l) {
 	TipoLista output = listaVuota();
   	return aux(l,output,precedenti);
 }
+
+int trovaCar(TipoLista l, int ind,int cont){
+  if(ind==cont){return car(l);}
+  return trovaCar(cdr(l),ind,cont+1);
+}
+
+int* massimiElementi(TipoLista* liste, int n) {
+	int* array = (int*) calloc(n,sizeof(int));
+  	for (int i=0; i<n; i++) {
+    	TipoLista l = mediaMenoMax(liste[i]);
+      	int len = length(l);
+      	printf("lista i-esima: %d: ",i); printlist(l);
+      	for (int j=0; j<len; j++) {	
+          	int car = trovaCar(l,j,0);
+          	
+          	if (array[j] == 0 && car != 0) { array[j] = car; }
+          	else if (array[j] == 0 && car <= 0) { array[j] = 0; }
+        	else if (array[j]!=0 && car >= array[j]) { array[j] = car; }
+        }
+    }
+  	return array;
+}
