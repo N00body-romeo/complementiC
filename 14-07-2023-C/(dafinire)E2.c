@@ -40,11 +40,3 @@ TipoLista mediaMenoMax(TipoLista l) {
 	TipoLista output = listaVuota();
   	return aux(l,output,precedenti);
 }
-
-int* aggiungiINposizione(TipoLista l, int n, int* arr, int indice) {
-	if (estVuota(l)) return arr;
-  	if (indice == n) {
-    	arr[i] = car(l);
-    }
-  	return aggiungiINposizione(cdr(l),n,arr,indice++);
-}
