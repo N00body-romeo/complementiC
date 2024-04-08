@@ -5,7 +5,10 @@
 
 #include "aux.h"
 
-float somma_diag(Mat *mat, int row, int col) {
+/*Soluzione Mattia*/
+
+
+float somma_diag01(Mat *mat, int row, int col) {
 	if (mat==NULL) return -1;
   	float somma = 0.0;
   	for (int i=0; i<mat->rows; i++) {
@@ -17,4 +20,19 @@ float somma_diag(Mat *mat, int row, int col) {
         }
     }
   	return somma;
+}
+
+
+
+/*Soluzione Rageny*/
+
+
+float somma_diag02(Mat *mat, int row, int col) {
+  float somma = 0;
+  for (int i = row, j = col; i < (mat->rows) && j < (mat->cols); i++, j++){
+    printf("i = %d, j = %d\n", i,j);
+    printf("num = %f\n", mat->mat[i][j]);
+    somma+=mat->mat[i][j];
+  }
+  return somma;
 }
