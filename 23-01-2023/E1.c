@@ -5,48 +5,41 @@
 
 #include "aux.h"
 
-float calcolaMedia(Mat *m) {
-	if (m==NULL) {
-    	return 0.0;
-    }
-  	float media = 0.0;
-  	for (int i=0; i<m->rows; i++) {
-    	for (int j=0; j<m->cols; j++) {
-        	media += m->mat[i][j];
-        }
-    }
-  	return media/m->rows;
+float media(Mat *m) {
+  	float somma = 0;
+	for (int i=0; i<m->rows; i++) {
+    		for (int j=0; j<m->cols; j++) {
+        		somma+= m->mat[i][j];
+        	}
+    	}
+  	float ris = somma/((m->rows)*(m->cols));
+  	return ris;
 }
 
 Mat* massima_sottomatrice(Mat *m){
-	if (m==NULL) {
-    	return NULL;
-    }
-  	int N = m->rows/2;
-  	float mediaMax = -1.0;
-  	Mat* maxMatrice = NULL;
-  	
-  	for (int i=0; i<=N; i++) {
-    	for (int j=0; j<=N; j++) {
-          Mat* sottomatrice = mat_alloc(N,N);
-         	for (int x=0; x<N; x++) {
-          		for (int y=0; y<N; y++) {
-             		sottomatrice->mat[x][y] = m->mat[i+x][j+y];   	
-                }
-            }
-          	float media = calcolaMedia(sottomatrice);
-          	if (media > mediaMax) {
-              	if (maxMatrice != NULL) mat_free(maxMatrice);
-            	mediaMax = media;
-              	maxMatrice = mat_alloc(N,N);
-          		for (int x=0; x<N; x++) {
-          			for (int y=0; y<N; y++) {
-             			maxMatrice->mat[x][y] = sottomatrice->mat[x][y];   	
-                	}
-            	}
-            }
-        	mat_free(sottomatrice);
-        }
-    }
-  	return maxMatrice;
+  	int rig = m->rows/2, col = m->cols/2;
+  
+	Mat* max_matrice = mat_alloc(rig, col);
+  	float max_media = 0.0;
+  	for (int i=0; i<=m->rows-rig; i++) {
+    		for (int j=0; j<=m->cols-col; j++) {
+        		Mat* sott = mat_alloc(rig, col);
+          		for (int x = 0; x<rig; x++) {
+            			for (int y=0; y<col; y++) {
+                			sott->mat[x][y] = m->mat[i+x][j+y];
+                		}
+            		}
+          		float media_sott = media(sott);
+          		if (media_sott > max_media) {
+            			max_media = media_sott;
+              			for (int x=0; x<rig; x++) {
+                			for (int y=0; y<col; y++) {
+                    				max_matrice->mat[x][y] = sott->mat[x][y];
+                    			}
+                		}
+          			mat_free(sott); 	
+            		}          	
+        	}
+    	}
+  	return max_matrice;
 }
