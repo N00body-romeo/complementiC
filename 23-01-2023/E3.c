@@ -1,7 +1,3 @@
-/******************************
-  IL PRIMO TEST NON FUNZIONA
-******************************/
-
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,29 +5,35 @@
 
 #include "aux.h"
 
-int conta_pari(TipoAlbero a){
-  if (estVuoto(a)) return 0;
-  if (a->info % 2==0)
-    return 1+conta_pari(sinistro(a))+conta_pari(destro(a));
-  return conta_pari(sinistro(a))+conta_pari(destro(a));
+int max(int a, int b) {
+    return a > b ? a : b;
 }
 
-int max(int a, int b) {
-    return (a > b) ? a : b;
+void cammino_pari_aux(TipoAlbero a, int somma, int num_pari, int *max_sum, int *max_num_pari) {
+    if (estVuoto(a)) {
+        if (num_pari > *max_num_pari || (num_pari == *max_num_pari && somma > *max_sum)) {
+            *max_sum = somma;
+            *max_num_pari = num_pari;
+        }
+        return;
+    }
+    
+    somma += radice(a);
+    num_pari += radice(a) % 2 == 0 ? 1 : 0;
+    
+    cammino_pari_aux(sinistro(a), somma, num_pari, max_sum, max_num_pari);
+    cammino_pari_aux(destro(a), somma, num_pari, max_sum, max_num_pari);
 }
 
 int cammino_pari(TipoAlbero a) {
-    if (estVuoto(a)) return 0;
+    int max_sum = 0;
+    int max_num_pari = 0;
     
-    int nodiPari = conta_pari(a);
-    int nodiPariSinistro = conta_pari(sinistro(a));
-    int nodiPariDestro = conta_pari(destro(a));
+    cammino_pari_aux(a, 0, 0, &max_sum, &max_num_pari);
     
-    if (nodiPari == 0 || nodiPariSinistro == nodiPariDestro) {
-        return a->info + max(cammino_pari(sinistro(a)), cammino_pari(destro(a)));
-    }
-    
-    TipoAlbero percorso = (nodiPariSinistro > nodiPariDestro) ? sinistro(a) : destro(a);
-    
-    return a->info + cammino_pari(percorso);
+    return max_sum;
 }
+
+
+
+
