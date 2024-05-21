@@ -44,9 +44,6 @@ int cammino_pari(TipoAlbero a) {
   	return r.somma;
 }
 
-
-
-
 /* IMPLEMENTAZIONE CORRETTA, MA TROPPO MACCHINOSA
 #include <stdio.h>
 #include <stdlib.h>
@@ -83,6 +80,3 @@ int cammino_pari(TipoAlbero a) {
     return max_sum;
 }
 */
-
-
-
