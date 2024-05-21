@@ -5,6 +5,55 @@
 
 #include "aux.h"
 
+typedef struct {
+	int pari_count;
+  	int somma;
+} Risultato;
+
+int max(int a, int b) { return (a > b) ? a : b; }
+
+Risultato AUXcammino_pari(TipoAlbero a) {
+	if (estVuoto(a)) {
+    	Risultato r = {0,0};
+      	return r;
+    }
+  
+  	int valore_corrente = radice(a);
+  	int count = (valore_corrente % 2 == 0) ? 1:0;
+  	
+  	Risultato sx = AUXcammino_pari(sinistro(a));
+  	Risultato dx = AUXcammino_pari(destro(a));
+  
+  	Risultato migliore;
+  	if (sx.pari_count > dx.pari_count) {
+    	migliore = sx;
+    }
+  	else if (sx.pari_count < dx.pari_count) {
+    	migliore = dx;
+    }
+  	else { migliore = (sx.somma >= dx.somma) ? sx : dx; }
+  
+  	migliore.pari_count += count;
+  	migliore.somma += valore_corrente;
+  	
+  	return migliore;    
+}
+
+int cammino_pari(TipoAlbero a) {
+	Risultato r = AUXcammino_pari(a);
+  	return r.somma;
+}
+
+
+
+
+/* IMPLEMENTAZIONE CORRETTA, MA TROPPO MACCHINOSA
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+#include "aux.h"
+
 int max(int a, int b) {
     return a > b ? a : b;
 }
@@ -33,7 +82,7 @@ int cammino_pari(TipoAlbero a) {
     
     return max_sum;
 }
-
+*/
 
 
 
